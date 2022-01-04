@@ -17,6 +17,7 @@ import ebsi from "../public/ebsi.png";
 import daesung from "../public/daesung.jpg";
 import megastudy from "../public/megastudy.gif";
 import etoos from "../public/etoos.png";
+import Profile from "../components/profilebar";
 
 const data = [
   [riro, "리로스쿨", "https://www.rirosoft.com/"],
@@ -34,22 +35,7 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* 로그인 안내 그리드 */}
-        <div className="card shadow-lg compact side bg-base-100 mb-5">
-          <div className="flex-row items-center space-x-4 card-body">
-            <div className="flex-1">
-              <h2 className="card-title">로그인을 해주세요.</h2>
-              <p className="text-base-content text-opacity-80">
-                로그인 상태가 아닙니다
-              </p>
-            </div>
-            <div className="flex-0">
-              <Link href="/login">
-                <button className="btn btn-sm btn-primary">로그인</button>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <Profile/>
 
         <div className="flex overflow-x-auto gap-4 mb-5">
           {data.map((x, y) => (
@@ -112,8 +98,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <Link href="/commands">
-            <button className="btn btn-xl m-5">공지사항 더보기</button>
+          <Link href="#">
+            <button className="btn btn-xl m-5" onClick={()=>alert('준비중입니다.')}>공지사항 더보기</button>
           </Link>
         </div>
 
@@ -133,53 +119,28 @@ export default function Home() {
                     <tr>
                       <th>제목</th>
                       <th>조회수</th>
-                      <th>읽기</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>대학교 꼭 가야하나요?</td>
                       <td>326회</td>
-                      <td>
-                        <button
-                          className="btn btn-xs"
-                          onClick="location.href='https://notice.winsub.kr/view/29'"
-                        >
-                          읽기
-                        </button>
-                      </td>
                     </tr>
                     <tr>
                       <td>이건 좀 아닌것같음</td>
                       <td>164회</td>
-                      <td>
-                        <button
-                          className="btn btn-xs"
-                          onClick="location.href='https://notice.winsub.kr/view/27'"
-                        >
-                          읽기
-                        </button>
-                      </td>
                     </tr>
                     <tr>
                       <td>안쓰던 문제집 팝니다</td>
                       <td>97회</td>
-                      <td>
-                        <button
-                          className="btn btn-xs"
-                          onClick="location.href='https://notice.winsub.kr/view/26'"
-                        >
-                          읽기
-                        </button>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-          <Link href="/commands">
-            <button className="btn btn-xl m-5">인기 익명게시판 더보기</button>
+          <Link href="#">
+            <button className="btn btn-xl m-5" onClick={()=>alert('준비중입니다.')}>인기 익명게시판 더보기</button>
           </Link>
         </div>
 
@@ -233,12 +194,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <Link href="/commands">
-            <button className="btn btn-xl m-5">입시 뉴스 더보기</button>
+          <Link href="#">
+            <button className="btn btn-xl m-5" onClick={()=>alert('준비중입니다.')}>입시 뉴스 더보기</button>
           </Link>
         </div>
       </main>
-
       <Footer />
     </div>
   );

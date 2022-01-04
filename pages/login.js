@@ -10,9 +10,11 @@ import {
     InstagramLoginButton,
     DiscordLoginButton,
     GithubLoginButton,
-    AppleLoginButton,
-    MicrosoftLoginButton
 } from "react-social-login-buttons";
+import naverbtn from '../public/naversquire.png'
+import kakaobtn from '../public/kakao_login_btn.png'
+import Image from "next/image";
+
 export default function Login() {
     return (
         <div
@@ -37,15 +39,26 @@ export default function Login() {
                         </div>
                         <h3 className="text-2xl font-bold text-center">Login to your account</h3>
                         <form action="">
-                            <div className="mt-4 form-control">
-                                <FacebookLoginButton/>
-                                <GoogleLoginButton/>
-                                <TwitterLoginButton/>
-                                <InstagramLoginButton/>
-                                <DiscordLoginButton/>
-                                <GithubLoginButton/>
-                                <AppleLoginButton/>
-                                <MicrosoftLoginButton/>
+                            <div className="mt-4">
+                                <div className="m-2">
+                                    <FacebookLoginButton onClick={()=>alert('준비중입니다.')}/>
+                                </div>
+                                <div className="m-2"><GoogleLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+
+                                <div className="m-2"><TwitterLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+
+                                <div className="m-2"><InstagramLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+
+                                <div className="m-2"><DiscordLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+
+                                <div className="m-2"><GithubLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+
+                                <div className="flex gap-4 justify-center items-center">
+                                    <Image src={naverbtn} width="50px" height="50px" className="btn" onClick={()=>alert('준비중입니다.')}/>
+                                    <div className="mt-1">
+                                        <Image src={kakaobtn} className="btn" onClick={()=>alert('준비중입니다.')}/>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

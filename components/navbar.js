@@ -21,11 +21,11 @@ export default function Navbar() {
             <Link href="/">
               <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
             </Link>
-            <Link href="/dashboard/login">
-              <a className="btn btn-ghost btn-sm rounded-btn">익명게시판</a>
+            <Link href="#">
+              <a className="btn btn-ghost btn-sm rounded-btn" onClick={()=>alert('준비중입니다.')}>익명게시판</a>
             </Link>
-            <Link href="/invite">
-              <a className="btn btn-ghost btn-sm rounded-btn">입시정보</a>
+            <Link href="#">
+              <a className="btn btn-ghost btn-sm rounded-btn" onClick={()=>alert('준비중입니다.')}>입시정보</a>
             </Link>
           </div>
         </div>
@@ -67,12 +67,12 @@ export default function Navbar() {
         <Link href="/">
           <a className="block py-2 px-4 text-sm hover:bg-base-200">Home</a>
         </Link>
-        <Link href="/dashboard/login">
-          <a className="block py-2 px-4 text-sm hover:bg-base-200">Dashboard</a>
+        <Link href="#">
+          <a className="block py-2 px-4 text-sm hover:bg-base-200" onClick={()=>alert('준비중입니다.')}>익명게시판</a>
         </Link>
-        <Link href="/invite">
-          <a className="block py-2 px-4 text-sm hover:bg-base-200 mb-2">
-            Invite
+        <Link href="#">
+          <a className="block py-2 px-4 text-sm hover:bg-base-200 mb-2" onClick={()=>alert('준비중입니다.')}>
+            입시정보
           </a>
         </Link>
       </div>
