@@ -14,9 +14,9 @@ export default function Profile() {
                             <img style={{borderRadius:50, height:55}} src={session.user.image} alt="profile_img"/>
                         </div>
                         <div className="flex-1">
-                            <h2 className="card-title">안녕하세요.</h2>
+                            <h2 className="card-title">{session.user.name}</h2>
                             <p className="text-base-content text-opacity-80">
-                                {session.user.email}로 로그인되었습니다.
+                                {session.user.email}
                             </p>
                         </div>
                         <div className="flex-0">
@@ -35,9 +35,9 @@ export default function Profile() {
                                 <Image style={{borderRadius:50}} height="55px" width="55px" src={avatar} alt="profile_img"/>
                             </div>
                             <div className="flex-1">
-                                <h2 className="card-title">안녕하세요.</h2>
+                                <h2 className="card-title">{session.user.name}</h2>
                                 <p className="text-base-content text-opacity-80">
-                                    {session.user.email}로 로그인되었습니다.
+                                    {session.user.email}
                                 </p>
                             </div>
                             <div className="flex-0">
@@ -62,7 +62,8 @@ export default function Profile() {
                         </p>
                     </div>
                     <div className="flex-0">
-                        <button className="btn btn-sm btn-primary" onClick={() => signIn()}>로그인</button>
+                        {/*<Link href="/login"><button className="btn btn-sm btn-primary">로그인</button></Link>*/}
+                        <button className="btn btn-sm btn-primary" onClick={()=>{signIn()}}>로그인</button>
                     </div>
                 </div>
             </div>

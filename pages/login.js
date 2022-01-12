@@ -14,7 +14,8 @@ import {
 import naverbtn from '../public/naversquire.png'
 import kakaobtn from '../public/kakao_login_btn.png'
 import Image from "next/image";
-
+import {signIn} from "next-auth/react";
+import EmailLogin from "../components/emailkogin";
 export default function Login() {
     return (
         <div
@@ -43,13 +44,13 @@ export default function Login() {
                                 <div className="m-2">
                                     <FacebookLoginButton onClick={()=>alert('준비중입니다.')}/>
                                 </div>
-                                <div className="m-2"><GoogleLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+                                <div className="m-2"><GoogleLoginButton onClick={()=>signIn('google',{ redirect: 'http://localhost:3000' })}/></div>
 
                                 <div className="m-2"><TwitterLoginButton onClick={()=>alert('준비중입니다.')}/></div>
 
                                 <div className="m-2"><InstagramLoginButton onClick={()=>alert('준비중입니다.')}/></div>
 
-                                <div className="m-2"><DiscordLoginButton onClick={()=>alert('준비중입니다.')}/></div>
+                                <div className="m-2"><DiscordLoginButton onClick={()=>signIn('discord',{ redirect: 'http://localhost:3000' })}/></div>
 
                                 <div className="m-2"><GithubLoginButton onClick={()=>alert('준비중입니다.')}/></div>
 
@@ -59,6 +60,16 @@ export default function Login() {
                                         <Image src={kakaobtn} className="btn" onClick={()=>alert('준비중입니다.')}/>
                                     </div>
                                 </div>
+                                {/*<div className="divider">또는 이메일로 로그인</div>*/}
+                                {/*<div className="form-control">*/}
+                                {/*    <label className="label">*/}
+                                {/*        <span className="label-text">이메일 입력</span>*/}
+                                {/*    </label>*/}
+                                {/*    <div className="relative">*/}
+                                {/*        <EmailLogin/>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<button onClick={() => signIn("email")}>Sign in with Email</button> */}
                             </div>
                         </form>
                     </div>

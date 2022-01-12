@@ -11,14 +11,14 @@ import Image from "next/image";
 import "animate.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-
+import Modal from "../components/automodal";
 import riro from "../public/riro.jpeg";
 import ebsi from "../public/ebsi.png";
 import daesung from "../public/daesung.jpg";
 import megastudy from "../public/megastudy.gif";
 import etoos from "../public/etoos.png";
 import Profile from "../components/profilebar";
-
+import IndexnoticeTable from '../components/IndexnoticeTable'
 const data = [
   [riro, "리로스쿨", "https://www.rirosoft.com/"],
   [ebsi, "EBSi", "https://www.ebsi.co.kr/"],
@@ -62,46 +62,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="card row-span-3 shadow-lg compact bg-base-100 mb-5">
-          <div className="flex-row items-center space-x-4 card-body">
-            <div className="flex-1">
-              <h2 className="card-title inline-block ml-2">
-                🔔 공지사항
-              </h2>
-              <p className="text-base-content text-opacity-40">
-                신규서비스 및 패치사항을 안내합니다
-              </p>
-              <br />
-              <div className="overflow-x-auto">
-                <table className="table w-full">
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>작성자</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>AllTime 온라인 강의 서비스 오픈</td>
-                      <td>관리자</td>
-                    </tr>
-                    <tr>
-                      <td>새학기 기념 이벤트</td>
-                      <td>관리자</td>
-                    </tr>
-                    <tr>
-                      <td>AllTime 베타 오픈</td>
-                      <td>관리자</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <Link href="#">
-            <button className="btn btn-xl m-5" onClick={()=>alert('준비중입니다.')}>공지사항 더보기</button>
-          </Link>
-        </div>
+        <IndexnoticeTable/>
 
         <div className="card row-span-3 shadow-lg compact bg-base-100 mb-5">
           <div className="flex-row items-center space-x-4 card-body">
@@ -199,6 +160,7 @@ export default function Home() {
           </Link>
         </div>
       </main>
+      {/*<Modal/>*/}
       <Footer />
     </div>
   );
