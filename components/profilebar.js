@@ -35,7 +35,7 @@ export default function Profile() {
                                 <Image style={{borderRadius:50}} height="55px" width="55px" src={avatar} alt="profile_img"/>
                             </div>
                             <div className="flex-1">
-                                <h2 className="card-title">{session.user.name}</h2>
+                                <h2 className="card-title">{session.user.id}</h2>
                                 <p className="text-base-content text-opacity-80">
                                     {session.user.email}
                                 </p>

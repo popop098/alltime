@@ -13,6 +13,10 @@ const NoticeSchema = new mongoose.Schema(
             type:String,
             required:true,
             maxlength:[200,'200글자이하로 입력하세요.']
+        },
+        time:{
+            type:String,
+            required:true
         }
     }
 )

@@ -2,10 +2,33 @@ import React, { Component, useState } from "react";
 import Link from "next/link";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithubAlt } from "@fortawesome/free-brands-svg-icons";
+import { faUserCircle,faBell } from "@fortawesome/free-regular-svg-icons";
 import "animate.css";
+import {useSession} from "next-auth/react";
+import Countdown from 'react-countdown';
 export default function Navbar() {
   const [menuToggle, setMenuToggle] = useState(false);
+  const { data: session } = useSession()
+  const renderer = ({ days,hours, minutes, seconds, completed }) => {
+    return <span>{days}</span>;
+  };
+  // const ctrlIcon = () =>{
+  //   if(session){
+  //     return(
+  //         <>
+  //           <a href='/me' className="btn"><FontAwesomeIcon icon={faUserCircle} size='2x'/></a>
+  //           <div className="mx-1 indicator">
+  //             <div className="indicator-item badge badge-secondary badge-sm"></div>
+  //             <a href='/notice' className="btn"><FontAwesomeIcon icon={faBell} size='2x'/></a>
+  //           </div>
+  //         </>
+  //     )
+  //   }else {
+  //     return (
+  //         <></>
+  //     )
+  //   }
+  // }
   return (
     <header className="bg-base-200 text-base-content shadow-lg rounded-box mb-2">
       <div className="navbar">
@@ -30,11 +53,20 @@ export default function Navbar() {
           </div>
         </div>
         <div className="navbar-end">
-          {/* <button className="btn btn-square btn-ghost">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                </button>  */}
+          <p>2023 수능 D-<Countdown date={Date.now() + 25660800000} intervalDelay={86400000} renderer={renderer} /></p>
+          {
+            session ? (
+                <>
+                  <a href='/me' className="btn"><FontAwesomeIcon icon={faUserCircle} size='2x'/></a>
+                  <div className="mx-1 indicator">
+                    <div className="indicator-item badge badge-secondary badge-sm"></div>
+                    <a href='/notice' className="btn"><FontAwesomeIcon icon={faBell} size='2x'/></a>
+                  </div>
+                </>
+            ) : (
+                <></>
+            )
+          }
           <div className="md:hidden flex">
             <button
               className="btn btn-square btn-ghost"

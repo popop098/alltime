@@ -26,10 +26,7 @@ export default async (req,res) => {
             break;
         case 'PUT':
             try{
-                const notice = await Notice.findByIdAndUpdate(id,req.body,{
-                    new:true,
-                    runValidators: true
-                });
+                const notice = await Notice.findByIdAndUpdate(id, {$set: {title:req.body.title,description:req.body.description}});
 
                 if(!notice){
                     return res.status(400).json({success:false})

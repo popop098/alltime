@@ -3,14 +3,15 @@ import {router} from "next/client";
 import ViewerComp from './ViewComp'
 import dynamic from "next/dynamic";
 import 'suneditor/dist/css/suneditor.min.css'; // Import Sun Editor's CSS File
-
+import moment from 'moment'
+import 'moment/locale/ko';
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
 });
 
-export default function WriteContentPage({title,description}){
-    const [TitleText, setTitleText] = useState(`${title}`);
-    const [DescText, setDescText] = useState(`${description}`);
+export default function WriteContentPage(){
+    const [TitleText, setTitleText] = useState('');
+    const [DescText, setDescText] = useState('');
 
     const TitleOnChange = (e) => {
         setTitleText(e.target.value);
@@ -25,15 +26,16 @@ export default function WriteContentPage({title,description}){
         // console.log(content);
         setDescText(content)
     };
-    const updateNotice = async () => {
+    const submitNotice = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/notice/${router.query.id}`, {
-                method: 'PUT',
+            const Time = moment().format('YYYY년 MMMM Do dddd, a h:mm:ss')
+            const res = await fetch(`http://localhost:3000/api/notice`, {
+                method: 'POST',
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({'title':TitleText,'description':String(DescText)})
+                body: JSON.stringify({'title':TitleText,'description':String(DescText),'time':String(Time)})
             })
             router.push("/notice");
             console.log(res)
@@ -42,17 +44,17 @@ export default function WriteContentPage({title,description}){
         }
     }
     const submit =()=> {
-        updateNotice()
+        submitNotice()
     }
     return (
         <>
             <div className='m-2'>
                 <div className="mb-2">
-                    <input onChange={TitleOnChange} value={TitleText} className='input input-primary input-lg' defaultValue={title}/>
+                    <input onChange={TitleOnChange} value={TitleText} className='input input-primary input-lg'/>
                 </div>
                 <div className="mb-2">
                     {/*<textarea onChange={DescOnChange} value={DescText} className='textarea h-26 w-full textarea-bordered' defaultValue={description}/>*/}
-                    <SunEditor lang="ko" defaultValue={DescText} height="150px"
+                    <SunEditor lang="ko" height="150px"
                                onChange={handleEditorChange}
                                setOptions={{
                                    buttonList: [

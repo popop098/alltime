@@ -1,18 +1,39 @@
-import { Viewer } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-
-// TOAST UI Editor Plugins
-import 'tui-chart/dist/tui-chart.css';
-import chart from '@toast-ui/editor-plugin-chart';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import 'tui-color-picker/dist/tui-color-picker.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
-import uml from '@toast-ui/editor-plugin-uml';
+import ReactMarkdown from 'react-markdown'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import remarkGfm from 'remark-gfm'
+// import rehypeHighlight from 'rehype-highlight'
 export default function ViewerComp({value}){
+    // const { convert } = require('html-to-text');
+    // const convert_value = convert(value)
+    // console.log(convert_value)
     return(
         <>
-            <Viewer initialValue={value} plugins={[chart, codeSyntaxHighlight, colorSyntax, tableMergedCell, uml]} />
+            {/*<ReactMarkdown*/}
+            {/*    children={value}*/}
+            {/*    remarkPlugins={[remarkGfm,{singleTilde: false}]}*/}
+            {/*    components={{*/}
+            {/*        code({node, inline, className, children, ...props}) {*/}
+            {/*            const match = /language-(\w+)/.exec(className || '')*/}
+            {/*            return !inline && match ? (*/}
+            {/*                <SyntaxHighlighter*/}
+            {/*                    children={String(children).replace(/\n$/, '')}*/}
+            {/*                    style={dark}*/}
+            {/*                    language={match[1]}*/}
+            {/*                    PreTag="div"*/}
+            {/*                    {...props}*/}
+            {/*                />*/}
+            {/*            ) : (*/}
+            {/*                <code className={className} {...props}>*/}
+            {/*                    {children}*/}
+            {/*                </code>*/}
+            {/*            )*/}
+            {/*        }*/}
+            {/*    }}*/}
+            {/*/>*/}
+            {/*<ReactMarkdown>{value}</ReactMarkdown>*/}
+            <div dangerouslySetInnerHTML={{__html:value}}>
+            </div>
         </>
     )
 };

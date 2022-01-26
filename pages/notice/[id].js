@@ -4,12 +4,8 @@ import {useRouter} from "next/router";
 import HeadTag from "../../components/headtag";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-import dynamic from "next/dynamic";
+import ViewerComp from "../../components/ViewComp"
 const View_Notice = ({notice}) => {
-    const Viewer = dynamic(
-        () => import('../../components/ViewComp'),
-        { ssr: false }
-    )
     return (
         <>
             <div className="grid p-2 lg:p-5 grid-cols-d gap-y-6 bg-base-300 animate__animated animate__fadeIn animate__faster">
@@ -21,9 +17,11 @@ const View_Notice = ({notice}) => {
                             <div className="flex-1">
                                 <h1 className="card-title inline-block ml-2 text-6xl">
                                     {notice.title}
+                                    <br/>
+                                    <p className="text-lg">게시일자 | {notice.time}</p>
                                 </h1>
                                 <div className="divider"></div>
-                                <Viewer value={notice.description}/>
+                                <ViewerComp value={notice.description}/>
                             </div>
                         </div>
                     </div>

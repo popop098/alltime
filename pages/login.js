@@ -3,20 +3,35 @@ import Navbar from "../components/navbar";
 import HeadTag from "../components/headtag";
 import "animate.css";
 import "swiper/css";
-import {
-    FacebookLoginButton,
-    GoogleLoginButton,
-    TwitterLoginButton,
-    InstagramLoginButton,
-    DiscordLoginButton,
-    GithubLoginButton,
-} from "react-social-login-buttons";
-import naverbtn from '../public/naversquire.png'
-import kakaobtn from '../public/kakao_login_btn.png'
-import Image from "next/image";
 import {signIn} from "next-auth/react";
-import EmailLogin from "../components/emailkogin";
+import {useState} from "react";
+import {useRouter} from "next/router";
 export default function Login() {
+    const router = useRouter()
+    const [Id, SetId] = useState('')
+    const [Pwd, SetPwd] = useState('')
+    const IdChange = (content) => {
+        SetId(content.target.value)
+    };
+    const PwdChange = (content) => {
+        // console.log(content);
+        SetPwd(content.target.value)
+    };
+    const login = async (e) => {
+        // 원래 실행되는 이벤트 취소
+        e.preventDefault();
+        // Form 안에서 이메일, 패스워드 가져오기
+        const id = Id
+        const pwd = Pwd
+        const response = await signIn("credentials", {
+            id,
+            pwd,
+            redirect: false,
+            callbackUrl:"http://localhost:3000/"
+        });
+        console.log(response);
+        await router.push(response.url)
+    }
     return (
         <div
             className="grid p-2 lg:p-5 grid-cols-1 gap-y-6 bg-base-300 animate__animated animate__fadeIn animate__faster">
@@ -39,37 +54,35 @@ export default function Login() {
                             </svg>
                         </div>
                         <h3 className="text-2xl font-bold text-center">Login to your account</h3>
-                        <form action="">
+                        <form>
                             <div className="mt-4">
-                                <div className="m-2">
-                                    <FacebookLoginButton onClick={()=>alert('준비중입니다.')}/>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">ID</span>
+                                    </label>
+                                    <input type="text" placeholder="ID" name="id" className="input input-bordered" required={true}
+                                    onChange={IdChange}/>
                                 </div>
-                                <div className="m-2"><GoogleLoginButton onClick={()=>signIn('google',{ redirect: 'http://localhost:3000' })}/></div>
-
-                                <div className="m-2"><TwitterLoginButton onClick={()=>alert('준비중입니다.')}/></div>
-
-                                <div className="m-2"><InstagramLoginButton onClick={()=>alert('준비중입니다.')}/></div>
-
-                                <div className="m-2"><DiscordLoginButton onClick={()=>signIn('discord',{ redirect: 'http://localhost:3000' })}/></div>
-
-                                <div className="m-2"><GithubLoginButton onClick={()=>alert('준비중입니다.')}/></div>
-
-                                <div className="flex gap-4 justify-center items-center">
-                                    <Image src={naverbtn} width="50px" height="50px" className="btn" onClick={()=>alert('준비중입니다.')}/>
-                                    <div className="mt-1">
-                                        <Image src={kakaobtn} className="btn" onClick={()=>alert('준비중입니다.')}/>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">Password</span>
+                                    </label>
+                                    <input type="password" placeholder="Password" name="pwd" className="input input-bordered" required={true}
+                                    onChange={PwdChange}/>
+                                </div>
+                                <div className="my-4 form-control" style={{textAlign:'right'}}>
+                                    <div>
+                                        <button type="button" className="btn" onClick={login}>로그인</button>
                                     </div>
                                 </div>
-                                {/*<div className="divider">또는 이메일로 로그인</div>*/}
-                                {/*<div className="form-control">*/}
-                                {/*    <label className="label">*/}
-                                {/*        <span className="label-text">이메일 입력</span>*/}
-                                {/*    </label>*/}
-                                {/*    <div className="relative">*/}
-                                {/*        <EmailLogin/>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<button onClick={() => signIn("email")}>Sign in with Email</button> */}
+                                <div className="my-5">
+                                    <div className="divider">or</div>
+                                </div>
+                                <div className="flex items-baseline justify-between gap-2">
+                                    <a className="btn" href="/register">회원가입</a>
+                                    <a className="btn" href="/findid">ID찾기</a>
+                                    <a className="btn" href="/findpwd">비밀번호찾기</a>
+                                </div>
                             </div>
                         </form>
                     </div>

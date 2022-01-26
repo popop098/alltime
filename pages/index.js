@@ -12,13 +12,16 @@ import "animate.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Modal from "../components/automodal";
+import dynamic from 'next/dynamic'
 import riro from "../public/riro.jpeg";
 import ebsi from "../public/ebsi.png";
 import daesung from "../public/daesung.jpg";
 import megastudy from "../public/megastudy.gif";
 import etoos from "../public/etoos.png";
 import Profile from "../components/profilebar";
-import IndexnoticeTable from '../components/IndexnoticeTable'
+//const IndexnoticeTable = dynamic(() => import('../components/IndexnoticeTable'),{ssr:false})
+import IndexnoticeTable from "../components/IndexnoticeTable";
+import axios from "axios";
 const data = [
   [riro, "리로스쿨", "https://www.rirosoft.com/"],
   [ebsi, "EBSi", "https://www.ebsi.co.kr/"],
@@ -27,7 +30,7 @@ const data = [
   [etoos, "이투스", "https://www.etoos.com/"],
 ];
 
-export default function Home() {
+const Home = ({api_data}) =>{
   return (
     <div className="grid p-2 lg:p-5 grid-cols-1 gap-y-6 bg-base-300 animate__animated animate__fadeIn animate__faster">
       <HeadTag title="메인" />
@@ -165,3 +168,11 @@ export default function Home() {
     </div>
   );
 }
+// Home.getInitialProps = async () => {
+//   const res = await axios.get('http://localhost:3000/api/main')
+//   const data = await res.data;
+//   console.log(data)
+//   return{api_data:data}
+// }
+
+export default Home;

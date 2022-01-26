@@ -1,16 +1,37 @@
 // https://youtu.be/WSr0GcBF7Ag?t=1410
 import { useSession } from "next-auth/react"
 import Link from "next/link";
-import fetch from "isomorphic-unfetch";
 import Navbar from "../components/navbar";
 import HeadTag from "../components/headtag";
-
-const notice = ({notice}) => {
-    console.log(notice)
+import {useRouter} from "next/router";
+import useSWR from 'swr'
+import fetcher from "../lib/fetch";
+export default function notice(){
+    const { data, error } = useSWR(
+        "http://localhost:3000/api/notice",
+        fetcher
+    );
     const { data: session } = useSession()
+    const router = useRouter();
+    const DeleteNotice = async ({NoticeId}) => {
+        try {
+            const res = await fetch(`http://localhost:3000/api/notice/${NoticeId}`, {
+                method: 'DELETE',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            router.push("/notice");
+            console.log(res)
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const action = () => {
                 if (session){
-                    if(session.user.email === 'jhoon6633@gmail.com'){
+                    if(session.user.role === 'Admin'){
                         return(
                             <>
                                 <div className="overflow-x-auto">
@@ -23,7 +44,8 @@ const notice = ({notice}) => {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {notice.map(notice=>{
+                                        {
+                                            data ? data.data.map(notice=>{
                                             return(
                                                 <tr>
                                                     <a href={`/notice/${notice._id}`} className="text-sm text-blue-500 hover:underline"><td>{notice.title}</td></a>
@@ -34,7 +56,7 @@ const notice = ({notice}) => {
                                                             <p>삭제 또는 수정 선택</p>
                                                             <div className="modal-action gap-1">
                                                                 <a href="#"
-                                                                   className="btn btn-error">삭제</a>
+                                                                   className="btn btn-error" onClick={()=>DeleteNotice({NoticeId:notice._id})}>삭제</a>
                                                                 <a href={`/notice/${notice._id}/edit`} className="btn btn-info">수정</a>
                                                                 <a href="#" className="btn">닫기</a>
                                                             </div>
@@ -43,7 +65,8 @@ const notice = ({notice}) => {
 
                                                 </tr>
                                             )
-                                        })}
+                                        }) : <p>로딩중입니다.</p>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -62,14 +85,16 @@ const notice = ({notice}) => {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {notice.map(notice=>{
+                                        {
+                                            data? data.data.map(notice=>{
                                             return(
                                                 <tr>
                                                     <a href={`/notice/${notice._id}`} className="text-sm text-blue-500 hover:underline"><td>{notice.title}</td></a>
                                                     <td>관리자</td>
                                                 </tr>
                                             )
-                                        })}
+                                        }) : <p>로딩중입니다.</p>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -88,14 +113,16 @@ const notice = ({notice}) => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {notice.map(notice=>{
+                                    {
+                                        data?data.data.map(notice=>{
                                         return(
                                             <tr>
                                                 <a href={`/notice/${notice._id}`} className="text-sm text-blue-500 hover:underline"><td>{notice.title}</td></a>
                                                 <td>관리자</td>
                                             </tr>
                                         )
-                                    })}
+                                    }):<p>로딩중입니다.</p>
+                                    }
                                     </tbody>
                                 </table>
                             </div>
@@ -103,6 +130,24 @@ const notice = ({notice}) => {
                     )
                 }
             }
+    const newpost = () => {
+        if(session){
+            if(session.user.role === "Admin"){
+                return (
+                    <>
+                        <div style={{textAlign:'right'}}>
+                            <Link href="/notice/new"><button className='btn btn-accent'>새 글 작성</button></Link>
+                        </div>
+                    </>
+
+                )
+            }else {
+                return (
+                    <></>
+                )
+            }
+        }
+    }
     return(
         <>
             <div className="grid p-2 lg:p-5 grid-cols-d gap-y-6 bg-base-300 animate__animated animate__fadeIn animate__faster">
@@ -118,6 +163,7 @@ const notice = ({notice}) => {
                                 <p className="text-base-content text-opacity-40">
                                     신규서비스 및 패치사항을 안내합니다
                                 </p>
+                                {newpost()}
                                 <br />
                                 {action()}
                             </div>
@@ -130,11 +176,10 @@ const notice = ({notice}) => {
     )}
 
 
-notice.getInitialProps = async () => {
-    const res = await fetch('http://localhost:3000/api/notice')
-    const {data} = await res.json();
+// notice.getInitialProps = async () => {
+//     const res = await fetch('http://localhost:3000/api/notice')
+//     const {data} = await res.json();
+//
+//     return {notice:data}
+// }
 
-    return {notice:data}
-}
-
-export default notice;

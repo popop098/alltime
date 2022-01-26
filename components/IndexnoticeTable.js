@@ -1,69 +1,69 @@
-// https://youtu.be/WSr0GcBF7Ag?t=1410
-import fetch from "isomorphic-unfetch";
-import {Async} from "react-async"
+//import fetch from "isomorphic-unfetch";
+import useAxios from "axios-hooks";
+import Link from "next/link";
+import fetcher from '../lib/fetch'
 import axios from "axios";
-import {useState,useEffect} from "react";
-// const getData = async ()=>{
-//     const res = await axios.get('http://localhost:3000/api/notice')
-//     return res.data
+import useSWR from 'swr'
+
+// const fetcher = async () => {
+//     const resp = await fetch('http://localhost:3000/api/notice')
+//     return await resp.json()
 // }
-
-const IndexnoticeTable = () => {
-    const [Data,setData] = useState('')
-    useEffect(()=>{
-        async function getData(){
-            const res = await axios.get('http://localhost:3000/api/notice')
-            return res.data
-        }
-        getData()
-    },[])
-    console.log(setData)
-    return(
+//const fetcher = (url) => fetch(url).then((res) => res.json());
+export default function IndexnoticeTable(){
+    // const res = await fetch('http://localhost:3000/api/notice')
+    // const {data} = await res.json();
+    // const { data} = useAxios(
+    //     'http://localhost:3000/api/notice'
+    // )
+    const { data, error } = useSWR(
+        "http://localhost:3000/api/notice",
+        fetcher
+    );
+    return (
         <>
-            <div className="overflow-x-auto">
-                <table className="table w-full">
-                    <thead>
-                    <tr>
-                        <th>제목</th>
-                        <th>작성자</th>
-                    </tr>
-                    </thead>
-                    {setData.map(notices=>(
-                        <>
-                            <tbody key={notices.key}>
-                            <tr>
-                                <a href={`/notice/${notices._id}`} className="text-sm text-blue-500 hover:underline"><td>{notices.title}</td></a>
-                                <td>관리자</td>
-                            </tr>
-                            </tbody>
-                        </>
-
-                    ))}
-                </table>
+            <div className="card row-span-3 shadow-lg compact bg-base-100 mb-5">
+                <div className="flex-row items-center space-x-4 card-body">
+                    <div className="flex-1">
+                        <h2 className="card-title inline-block ml-2">
+                            🔔 공지사항
+                        </h2>
+                        <p className="text-base-content text-opacity-40">
+                            중요공지사항을 확인하세요
+                        </p>
+                        <br/>
+                        <div className="overflow-x-auto">
+                            <table className="table w-full">
+                                <thead>
+                                <tr>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                </tr>
+                                </thead>
+                                {
+                                    data ? data.data.slice(0, 2).map(notices => (
+                                        <tbody key={notices.key}>
+                                        <tr>
+                                            <a href={`/notice/${notices._id}`}
+                                               className="text-sm text-blue-500 hover:underline">
+                                                <td>{notices.title}</td>
+                                            </a>
+                                            <td>관리자</td>
+                                        </tr>
+                                        </tbody>
+                                    )) : <p>불러오는중입니다.</p>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <Link href="/notice">
+                    <button className="btn btn-xl m-5">공지사항 더보기</button>
+                </Link>
             </div>
+
         </>
 
     )
 }
 
-
-
-// IndexnoticeTable.getInitialProps = async () => {
-//     const res = await axios.get('http://localhost:3000/api/notice')
-//     const {data} = await res.data;
-//
-//     return {notice:data}
-// }
-// IndexnoticeTable.getInitialProps = async () => {
-//     const res = await fetch('http://localhost:3000/api/notice')
-//     const {data} = await res.json();
-//     console.log(res)
-//     return {notices:data}
-// }
-// IndexnoticeTable.= async () => {
-//     const res = await fetch('http://localhost:3000/api/notice')
-//     const {data} = await res.json();
-//     console.log({data})
-//     return {notice:data}
-// }
-export default IndexnoticeTable;
