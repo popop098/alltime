@@ -4,7 +4,6 @@ import Account from '../../model/Account'
 import bcrypt from "bcrypt";
 
 dbConnect()
-
 export default async (req,res) => {
     const { method } = req;
     switch (method){

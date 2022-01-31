@@ -28,7 +28,7 @@ export default function WriteContentPage(){
     };
     const submitNotice = async () => {
         try {
-            const Time = moment().format('YYYY년 MMMM Do dddd, a h:mm:ss')
+            const Time = moment().format('YYYY/MMMM/Do/dddd, a h:mm:ss')
             const res = await fetch(`http://localhost:3000/api/notice`, {
                 method: 'POST',
                 headers: {
