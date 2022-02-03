@@ -6,5 +6,8 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("@themesberg/flowbite/plugin"), require("daisyui")],
+  plugins: [require("@themesberg/flowbite/plugin"), require("daisyui"),require('@tailwindcss/typography'),],
+  corePlugins: {
+    preflight: false,
+  },
 };

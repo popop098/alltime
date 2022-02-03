@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import Image from "next/image";
+import logo from '../public/fav.png'
 export default function Footer() {
   return (
       <footer className="p-10 footer bg-base-200 text-base-content rounded-box">
@@ -45,6 +46,9 @@ export default function Footer() {
           </div>
           <div className="footer-center">
               Copyright &copy; 2022 OOO. All Rights Reserved.{" "}
+          </div>
+          <div>
+              <Image src={logo} width="140px" height="140px"></Image>
           </div>
       </footer>
   );

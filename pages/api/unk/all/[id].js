@@ -1,10 +1,12 @@
 import dbConnect from "../../../../utils/dbConnect";
-//import UnkAll from '../../../../model/UnkAll'
+import UnkAll from '../../../../model/UnkAll'
 
 dbConnect()
 
 export default async (req,res) => {
-    var UnkAll = require('../../../../model/UnkAll')
+    //var UnkAll = require('../../../../model/UnkAll')
+    // var mongoose = require('mongoose');
+    // var UnkAll = mongoose.model('../../../../model/UnkAll')
     const {
         query:{id},
         method
@@ -26,9 +28,16 @@ export default async (req,res) => {
             }
             break;
         case 'POST':
-            await UnkAll.findByIdAndUpdate(id,{$set:{like:req.body.like}}).then(
-                res => res.status(200).json({success:true,data:notice})
-            ).catch(err => res.status(400).json({success:false}))
+            try {
+                const notice = await UnkAll.findByIdAndUpdate(id,{$set:{like:req.body.like}})
+                if(!notice){
+                    return res.status(400).json({success:false})
+                }
+                res.status(200).json({success:true,data:notice})
+            }catch (error){
+                res.status(400).json({success:false})
+            }
+
             break;
         case 'PUT':
             try{

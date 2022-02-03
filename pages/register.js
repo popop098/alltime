@@ -1,71 +1,26 @@
-import Link from "next/link";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import HeadTag from "../components/headtag";
-import {Component} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBell} from "@fortawesome/free-regular-svg-icons/faBell";
-import {faNewspaper} from "@fortawesome/free-regular-svg-icons/faNewspaper";
-import {faTrophy} from "@fortawesome/free-solid-svg-icons/faTrophy";
-import Image from "next/image";
 import "animate.css";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {useRef, useState} from 'react'
+import {useState} from 'react'
 import "swiper/css";
 import {ToastContainer, toast, Flip} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import riro from "../public/riro.jpeg";
-import ebsi from "../public/ebsi.png";
-import daesung from "../public/daesung.jpg";
-import megastudy from "../public/megastudy.gif";
-import etoos from "../public/etoos.png";
-import axios from "axios";
 import {signIn} from "next-auth/react";
 import fetch from "isomorphic-unfetch";
-import {useRouter} from "next/router";
 import PasswordStrengthBar from 'react-password-strength-bar';
-const data = [
-    [riro, "리로스쿨", "https://www.rirosoft.com/"],
-    [ebsi, "EBSi", "https://www.ebsi.co.kr/"],
-    [daesung, "대성마이맥", "http://www.mimacstudy.com/"],
-    [megastudy, "메가스터디", "http://www.megastudy.net/"],
-    [etoos, "이투스", "https://www.etoos.com/"],
-];
-
+import TosComp from "../components/terms/tos";
+import CountdownTimer from '@sakit-sa/countdown-timer';
 export default function Home() {
-    // const notify = () => toast.success('회원가입이 완료되었어요!', {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    // });
-    // const toastId = useRef(null);
-    // const PromisToast = () => {
-    //     const loadid = toast.loading("회원가입중입니다...");
-    //     axios.get("http://localhost:3000/api/notice")
-    //         .then(res => {
-    //             toast.update(
-    //                 loadid,
-    //                 {type: "success", render: "회원가입 성공!", autoClose: 5000, isLoading: false, transition: Flip}
-    //             )
-    //             console.log(res);
-    //         })
-    //         .catch(err => {
-    //             if (err) {
-    //                 toast.update(
-    //                     loadid,
-    //                     {type: "error", render: "회원가입 실패!", autoClose: 5000, isLoading: false, transition: Flip}
-    //                 )
-    //             }
-    //         })
-    // }
     const [Id, SetId] = useState('')
     const [Pwd, SetPwd] = useState('')
     const [PwdRe, SetPwdRe] = useState('')
     const [Email, SetEmail] = useState('')
+    const [SendEmail, SetSendEmail] = useState(false)
+    const [IsVerify, SetIsVerify] = useState(false)
+    const [VerifyCode, SetVerifyCode] = useState('')
+    const [Code, SetCode] = useState('')
+    const [IsCountDown,SetIsCountDown] = useState(false)
     const IdChange = (content) => {
         // console.log(content);
         SetId(content.target.value)
@@ -82,7 +37,95 @@ export default function Home() {
         // console.log(content);
         SetEmail(content.target.value)
     };
-    const router = useRouter();
+    const CodeChange = (content) => {
+        // console.log(content);
+        SetCode(content.target.value)
+    };
+    const SendVerify = async (e) => {
+        const loadid = toast.loading("인증코드 발송중입니다...");
+        const email = String(Email)
+        if(email === ''){
+            return toast.update(
+                loadid,
+                {type: "error", render: "이메일주소를 입력해주세요.", autoClose: 5000, isLoading: false, transition: Flip}
+            )
+        }
+        const randcode = Math.random().toString(36).slice(2);
+        SetVerifyCode(randcode)
+        //const html = generate({randcode})
+        await fetch('/api/sendverify',{
+            method:"POST",
+            body: JSON.stringify({'email':email,'code':randcode,'title':"AllTime 이메일 인증 안내 메일입니다."}),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(res => {
+            console.log(res.status)
+            if (res.status === 200){
+                SetSendEmail(true)
+                SetIsCountDown(true)
+                toast.update(
+                    loadid,
+                    {type: "success", render: "인증코드 발송 성공! 3분이내에 인증코드를 정확히 입력해주세요.", autoClose: 5000, isLoading: false, transition: Flip}
+                )
+            } else {
+                SetVerifyCode('')
+                toast.update(
+                    loadid,
+                    {
+                        type: "error",
+                        render: "입력한 이메일주소가 유효하지않거나 시스템오류입니다.",
+                        autoClose: 5000,
+                        isLoading: false,
+                        transition: Flip
+                    }
+                )
+            }
+        }).catch(err => {
+            console.log(err)
+            if(err){
+                toast.update(
+                loadid,
+                {
+                    type: "error",
+                    render: "입력한 이메일주소가 유효하지않거나 시스템오류입니다.",
+                    autoClose: 5000,
+                    isLoading: false,
+                    transition: Flip
+                }
+            )
+        }
+
+        })}
+    const CheckCode = (e) => {
+        const loadid = toast.loading("인증코드 확인중입니다...");
+        if (Code === VerifyCode) {
+            SetIsVerify(true)
+            SetIsCountDown(false)
+            toast.update(
+                loadid,
+                {
+                    type: "success",
+                    render: "인증코드가 확인되었습니다.",
+                    autoClose: 5000,
+                    isLoading: false,
+                    transition: Flip
+                }
+            )
+        } else {
+            toast.update(
+                loadid,
+                {
+                    type: "error",
+                    render: "입력한 인증코드가 일치하지않습니다.",
+                    autoClose: 5000,
+                    isLoading: false,
+                    transition: Flip
+                }
+            )
+        }
+    }
     const register = async (e) => {
         // 원래 실행되는 이벤트 취소
         //e.preventDefault();
@@ -116,9 +159,6 @@ export default function Home() {
             }
         })
             .then(async res => {
-                const {data} = await res.json()
-                //await router.push("/notice");
-                console.log(data)
                 if (res.status === 201) {
                     toast.update(
                         loadid,
@@ -137,7 +177,6 @@ export default function Home() {
                     )
                 }
 
-                console.log(res);
             })
             .catch(err => {
                 if (err) {
@@ -148,6 +187,13 @@ export default function Home() {
                 }
             })
     }
+    const Timeout = () => {
+        SetIsCountDown(false)
+        SetVerifyCode('')
+        SetSendEmail(false)
+        toast.error("인증코드 입력시간이 만료되었습니다." +
+            "재인증해주세요.")
+    }
     return (
         <div
             className="grid p-2 lg:p-5 grid-cols-1 gap-y-6 bg-base-300 animate__animated animate__fadeIn animate__faster">
@@ -157,7 +203,7 @@ export default function Home() {
 
             <main>
                 <div className="flex items-center justify-center card min-h-screen bg-base-200">
-                    <div className="px-10 py-8 mt-4 text-left card bg-base-100 shadow-lg w-80">
+                    <div className="px-8 py-8 mt-4 text-left card bg-base-100 shadow-lg w-1/5">
                         <ToastContainer position="top-right"
                                         autoClose={5000}
                                         hideProgressBar={false}
@@ -191,14 +237,68 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className="mt-4">
-                                    <label className="block" htmlFor="email">Email</label>
+                                    <label className="label">
+                                        <span className="label-text">Email</span>
+                                    </label>
                                     <div className="relative">
-                                        <input placeholder="Email"
-                                               className="w-full px-4 py-2 mt-2 input input-primary" type="email"
-                                               name="email" required={true}
-                                               onChange={EmailChange}/>
+                                        <input type="email" placeholder="Email"
+                                               className="w-full pr-16 input input-primary" onChange={EmailChange}
+                                               required disabled={IsVerify}/>
+                                        {
+                                            IsVerify ? (
+                                                <button
+                                                    className="absolute top-0 right-0 rounded-l-none btn btn-primary"
+                                                    type='button' disabled>인증됨
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="absolute top-0 right-0 rounded-l-none btn btn-primary"
+                                                    type='button' onClick={SendVerify} disabled={IsCountDown}>{IsCountDown?"대기중":"인증"}
+                                                </button>
+                                            )
+                                        }
                                     </div>
                                 </div>
+                                {
+                                    SendEmail ? (
+                                        <div className="mt-4">
+                                            {
+                                                IsCountDown ? (
+                                                    <label className="label">
+                                                <span className="label-text">인증코드 | <CountdownTimer
+                                                    time={180}
+                                                    format="mm:ss"
+                                                    onComplete={() => Timeout()}
+                                                /></span>
+                                                    </label>
+                                                ):(
+                                                    <label className="label">
+                                                <span className="label-text">인증코드</span>
+                                                    </label>
+                                                )
+                                            }
+
+                                            <div className="relative">
+                                                <input type="text" placeholder="인증코드"
+                                                       className="w-full pr-16 input input-primary"
+                                                       onChange={CodeChange} required disabled={IsVerify}/>
+                                                {
+                                                    IsVerify ? (
+                                                        <button
+                                                            className="absolute top-0 right-0 rounded-l-none btn btn-primary"
+                                                            type='button' disabled>인증됨
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            className="absolute top-0 right-0 rounded-l-none btn btn-primary"
+                                                            type='button' onClick={CheckCode}>인증
+                                                        </button>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    ) : null
+                                }
                                 <div className="mt-4">
                                     <label className="block">비밀번호</label>
                                     <div className="relative">
@@ -207,10 +307,7 @@ export default function Home() {
                                                name="pwd" required={true}
                                                onChange={PwdChange}/>
                                         <PasswordStrengthBar password={Pwd}
-                                                             minLength={5}
-                                                             onChangeScore={(score, feedback) => {
-                                                                 console.log(score, feedback);
-                                                             }}/>
+                                                             minLength={5}/>
                                     </div>
                                 </div>
                                 <div className="mt-4">
@@ -222,6 +319,7 @@ export default function Home() {
                                                onChange={PwdReChange}/>
                                     </div>
                                 </div>
+                                <TosComp/>
                                 <div className="flex items-baseline justify-end" style={{textAlign: 'right'}}>
                                     <button className="btn btn-md text-sm mt-2" type="button" onClick={register}>회원가입
                                     </button>
@@ -230,7 +328,9 @@ export default function Home() {
 
                                 </div>
                                 <div style={{textAlign: 'center'}} className="mt-4">
-                                    <a className="text-sm text-blue-500 hover:underline" onClick={()=>{signIn()}}>로그인하기</a>
+                                    <a className="text-sm text-blue-500 hover:underline" onClick={() => {
+                                        signIn()
+                                    }}>로그인하기</a>
                                 </div>
                             </div>
                         </form>

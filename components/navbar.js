@@ -6,6 +6,8 @@ import { faUserCircle,faBell } from "@fortawesome/free-regular-svg-icons";
 import "animate.css";
 import {useSession} from "next-auth/react";
 import Countdown from 'react-countdown';
+import Image from "next/image";
+import logo from '../public/fav.png'
 export default function Navbar() {
   const [menuToggle, setMenuToggle] = useState(false);
   const { data: session } = useSession()
@@ -32,7 +34,8 @@ export default function Navbar() {
   return (
     <header className="bg-base-200 text-base-content shadow-lg rounded-box mb-2">
       <div className="navbar">
-        <div className="px-2 mx-2 navbar-start">
+        <div className="px-2 mx-2 navbar-start gap-2">
+          <Link href="/"><Image src={logo} width="50px" height="50px"></Image></Link>
           <span className="text-lg font-bold">
             <Link href="/">
               <a>AllTime</a>

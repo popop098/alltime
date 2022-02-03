@@ -13,7 +13,7 @@ export default function HeadTag({ title }) {
       <meta property="og:site_name" value="Powered By Next.js" />
       <meta
         property="og:image"
-        content="https://cdn.discordapp.com/avatars/893841721958469703/d1d394c5cbe6b81ad4c18b8502f64d07"
+        content="https://i.ibb.co/SrMqBKQ/logo.png"
       />
     </Head>
   );

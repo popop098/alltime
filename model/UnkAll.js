@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose;
-mongoose.Promise = global.Promise;
-const UnkAllSchema = new Schema(
+
+const UnkAllSchema = new mongoose.Schema(
     {
         name:{
             type:String,
@@ -34,4 +33,4 @@ const UnkAllSchema = new Schema(
     }
 )
 
-module.exports = mongoose.models.UnkAll || mongoose.model('unkall',UnkAllSchema);
+module.exports = mongoose.models.UnkAll || mongoose.model('unkalls',UnkAllSchema);
