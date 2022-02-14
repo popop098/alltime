@@ -38,7 +38,7 @@ export default function Navbar() {
     <header className="bg-base-200 text-base-content shadow-lg rounded-box mb-2">
       <div className="navbar">
         <div className="px-2 mx-2 navbar-start gap-2">
-          <Link href="/"><Image src='../public/fav.png' width="50px" height="50px"></Image></Link>
+          <Link href="/"><Image src='/fav.png' width="50px" height="50px"></Image></Link>
           <span className="text-lg font-bold">
             <Link href="/">
               <a>AllTime</a>

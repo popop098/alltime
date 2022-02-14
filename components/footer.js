@@ -54,7 +54,7 @@ export default function Footer() {
               Copyright &copy; 2022 OOO. All Rights Reserved.{" "}
           </div>
           <div>
-              <Image src='../public/fav.png' width="140px" height="140px"></Image>
+              <Image src='/fav.png' width="140px" height="140px"></Image>
           </div>
       </footer>
   );
