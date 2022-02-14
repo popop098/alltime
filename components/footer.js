@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Image from "next/image";
 import logo from '../public/fav.png'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faDiscord} from "@fortawesome/free-brands-svg-icons";
+
 export default function Footer() {
   return (
       <footer className="p-10 footer bg-base-200 text-base-content rounded-box">
@@ -41,6 +44,9 @@ export default function Footer() {
                           <path
                               d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
                       </svg>
+                  </a>
+                  <a href="https://discord.gg/RYqahDUfKE">
+                      <FontAwesomeIcon icon={faDiscord} size="2x" className="fill-current"/>
                   </a>
               </div>
           </div>

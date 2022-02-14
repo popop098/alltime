@@ -6,7 +6,7 @@ import HeadTag from "../components/headtag";
 import {useRouter} from "next/router";
 import useSWR from 'swr'
 import fetcher from "../lib/fetch";
-export default function notice(){
+export default function Notice(){
     const { data, error } = useSWR(
         "http://localhost:3000/api/notice",
         fetcher
@@ -47,7 +47,7 @@ export default function notice(){
                                         {
                                             data ? data.data.map(notice=>{
                                             return(
-                                                <tr>
+                                                <tr key={notice.key}>
                                                     <a href={`/notice/${notice._id}`} className="text-sm text-blue-500 hover:underline"><td>{notice.title}</td></a>
                                                     <td>관리자</td>
                                                     <td><a href="#my-modal" className="text-blue-500">작업</a></td>
@@ -88,7 +88,7 @@ export default function notice(){
                                         {
                                             data? data.data.map(notice=>{
                                             return(
-                                                <tr>
+                                                <tr key={notice.key}>
                                                     <a href={`/notice/${notice._id}`} className="text-sm text-blue-500 hover:underline"><td>{notice.title}</td></a>
                                                     <td>관리자</td>
                                                 </tr>
@@ -116,7 +116,7 @@ export default function notice(){
                                     {
                                         data?data.data.map(notice=>{
                                         return(
-                                            <tr>
+                                            <tr key={notice.key}>
                                                 <a href={`/notice/${notice._id}`} className="text-sm text-blue-500 hover:underline"><td>{notice.title}</td></a>
                                                 <td>관리자</td>
                                             </tr>

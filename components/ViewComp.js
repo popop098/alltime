@@ -32,7 +32,7 @@ export default function ViewerComp({value}){
             {/*    }}*/}
             {/*/>*/}
             {/*<ReactMarkdown>{value}</ReactMarkdown>*/}
-            <div dangerouslySetInnerHTML={{__html:value}}>
+            <div className="prose prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-sm prose-headings:font-bold prose-a:text-blue-600" dangerouslySetInnerHTML={{__html:value}}>
             </div>
         </>
     )

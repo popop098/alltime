@@ -15,7 +15,12 @@ module.exports = {
             {
                 test: /\.txt$/,
                 use: "raw-loader"
-            }
+            },
+            {
+                test: /\.pdf$/,
+                use: "raw-loader"
+            },
+
         );
         return config;
     },

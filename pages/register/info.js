@@ -1,6 +1,6 @@
-import Footer from "../components/footer";
-import Navbar from "../components/navbar";
-import HeadTag from "../components/headtag";
+import Footer from "../../components/footer";
+import Navbar from "../../components/navbar";
+import HeadTag from "../../components/headtag";
 import "animate.css";
 import {useState} from 'react'
 import "swiper/css";
@@ -9,8 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import {signIn} from "next-auth/react";
 import fetch from "isomorphic-unfetch";
 import PasswordStrengthBar from 'react-password-strength-bar';
-import TosComp from "../components/terms/tos";
 import CountdownTimer from '@sakit-sa/countdown-timer';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 export default function Home() {
     const [Id, SetId] = useState('')
     const [Pwd, SetPwd] = useState('')
@@ -93,16 +94,16 @@ export default function Home() {
             console.log(err)
             if(err){
                 toast.update(
-                loadid,
-                {
-                    type: "error",
-                    render: "입력한 이메일주소가 유효하지않거나 시스템오류입니다.",
-                    autoClose: 5000,
-                    isLoading: false,
-                    transition: Flip
-                }
-            )
-        }
+                    loadid,
+                    {
+                        type: "error",
+                        render: "입력한 이메일주소가 유효하지않거나 시스템오류입니다.",
+                        autoClose: 5000,
+                        isLoading: false,
+                        transition: Flip
+                    }
+                )
+            }
 
         })}
     const CheckCode = (e) => {
@@ -220,6 +221,14 @@ export default function Home() {
 
             <main>
                 <div className="flex items-center justify-center card min-h-screen bg-base-200">
+                    <div className="absolute inset-x-0 top-4">
+                        <ul className="w-full steps">
+                            <li className="step step-primary">이용약관 동의</li>
+                            <li className="step step-primary">계정생성</li>
+                            <li className="step">학적인증</li>
+                            <li className="step">가입완료</li>
+                        </ul>
+                    </div>
                     <div className="px-8 py-8 mt-4 text-left card bg-base-100 shadow-lg w-1/5">
                         <ToastContainer position="top-right"
                                         autoClose={5000}
@@ -283,22 +292,22 @@ export default function Home() {
                                                 IsCountDown ? (
                                                     <label className="label">
                                                         <span className="label-text">인증코드 | <CountdownTimer
-                                                                                                    time={180}
-                                                                                                    format="mm:ss"
-                                                                                                    onComplete={() => Timeout()}
-                                                                                                />{
-                                                                                                        CanEditAddress ? (
-                                                                                                            <button
-                                                                                                                className="btn btn-primary btn-sm ml-2"
-                                                                                                                type='button' onClick={() => EditAddress()}>이메일 수정
-                                                                                                            </button>
-                                                                                                        ) : null
-                                                                                                    }
+                                                            time={180}
+                                                            format="mm:ss"
+                                                            onComplete={() => Timeout()}
+                                                        />{
+                                                            CanEditAddress ? (
+                                                                <button
+                                                                    className="btn btn-primary btn-sm ml-2"
+                                                                    type='button' onClick={() => EditAddress()}>이메일 수정
+                                                                </button>
+                                                            ) : null
+                                                        }
                                                         </span>
                                                     </label>
                                                 ):(
                                                     <label className="label">
-                                                <span className="label-text">인증코드</span>
+                                                        <span className="label-text">인증코드</span>
                                                     </label>
                                                 )
                                             }
@@ -344,18 +353,25 @@ export default function Home() {
                                                onChange={PwdReChange}/>
                                     </div>
                                 </div>
-                                <TosComp/>
+                                <div className="card mt-5">
+                                    <div className="card-title">
+                                        프로모션 메일 수신동의
+                                        <div className="ml-2 badge badge-accent">선택</div>
+                                    </div>
+                                    <div className="card-body h-30" style={{overflowY:"scroll"}}>
+                                        <article className="prose prose-sm prose-headings:text-2xl prose-headings:font-bold prose-a:text-blue-600">
+                                            <h2>프로모션 메일이란?</h2>
+                                            <p>이벤트나 AllTime관련 소식등을 입력한 메일로 받아보실수있는 서비스입니다.</p>
+                                        </article>
+                                    </div>
+                                    <label className="label">
+                                        <span className="label-text text-red-600 font-bold">프로모션 메일 수신</span>
+                                        <input type="checkbox" className="checkbox checkbox-primary" onChange={()=>SetPoli(!Poli)}/>
+                                    </label>
+                                </div>
                                 <div className="flex items-baseline justify-end" style={{textAlign: 'right'}}>
-                                    <button className="btn btn-md text-sm mt-2" type="button" onClick={register}>회원가입
+                                    <button className="btn btn-md text-sm mt-2" type="button" onClick={register}>다음으로<FontAwesomeIcon icon={faArrowRight} className="ml-1"/>
                                     </button>
-                                </div>
-                                <div className="flex items-baseline justify-end">
-
-                                </div>
-                                <div style={{textAlign: 'center'}} className="mt-4">
-                                    <a className="text-sm text-blue-500 hover:underline" onClick={() => {
-                                        signIn()
-                                    }}>로그인하기</a>
                                 </div>
                             </div>
                         </form>

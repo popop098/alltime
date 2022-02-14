@@ -8,9 +8,12 @@ import {useSession} from "next-auth/react";
 import Countdown from 'react-countdown';
 import Image from "next/image";
 import logo from '../public/fav.png'
+import {useTheme} from 'next-themes'
+import {faMoon,faSun} from "@fortawesome/free-regular-svg-icons";
 export default function Navbar() {
   const [menuToggle, setMenuToggle] = useState(false);
   const { data: session } = useSession()
+  const {theme, setTheme} = useTheme()
   const renderer = ({ days,hours, minutes, seconds, completed }) => {
     return <span>{days}</span>;
   };
@@ -55,15 +58,19 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-2">
+          <button className="btn btn-outline" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+            <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+            <p>{theme==='dark'?'화이트':'다크'}</p>모드
+          </button>
           <p>2023 수능 D-<Countdown date={Date.now() + 25660800000} intervalDelay={86400000} renderer={renderer} /></p>
           {
             session ? (
                 <>
-                  <a href='/me' className="btn"><FontAwesomeIcon icon={faUserCircle} size='2x'/></a>
+                  <Link href='/me'><button className="btn"><FontAwesomeIcon icon={faUserCircle} size='2x'/></button></Link>
                   <div className="mx-1 indicator">
                     <div className="indicator-item badge badge-secondary badge-sm"></div>
-                    <a href='/notice' className="btn"><FontAwesomeIcon icon={faBell} size='2x'/></a>
+                    <Link href='/notice'><button  className="btn"><FontAwesomeIcon icon={faBell} size='2x'/></button></Link>
                   </div>
                 </>
             ) : (

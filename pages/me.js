@@ -6,7 +6,7 @@ import Image from "next/image";
 import avatar from "../public/avatar.png";
 import {signOut, useSession} from "next-auth/react";
 import InfoBar from "../components/MeComp/infobar";
-export default function me({data}) {
+export default function Me({data}) {
     const {data: session} = useSession()
     // if(!session){
     //     return (
