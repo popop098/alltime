@@ -7,7 +7,7 @@ import "animate.css";
 import {useSession} from "next-auth/react";
 import Countdown from 'react-countdown';
 import Image from "next/image";
-import fav from '../../public/fav.png'
+import fav from '../public/fav.png'
 import {useTheme} from 'next-themes'
 import {faMoon,faSun} from "@fortawesome/free-regular-svg-icons";
 export default function Navbar() {
