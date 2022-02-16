@@ -8,7 +8,7 @@ import useSWR from 'swr'
 import fetcher from "../lib/fetch";
 export default function Notice(){
     const { data, error } = useSWR(
-        "http://localhost:3000/api/notice",
+        "/api/notice",
         fetcher
     );
     const { data: session } = useSession()
