@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn.discordapp.com'],
+    domains: ['cdn.discordapp.com','opencdn.winsub.kr'],
   },
     webpack: (config, { isServer }) => {
         if (!isServer) {
