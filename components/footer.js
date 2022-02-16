@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Image from "next/image";
-import fav from '../public/fav.png'
+import fav from '../../public/fav.png'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 
