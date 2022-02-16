@@ -17,7 +17,7 @@ export default function IndexnoticeTable(){
     //     'http://localhost:3000/api/notice'
     // )
     const { data, error } = useSWR(
-        "http://localhost:3000/api/notice",
+        "/api/notice",
         fetcher
     );
     return (

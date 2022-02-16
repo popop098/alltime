@@ -16,7 +16,7 @@ export default NextAuth({
             // 수정
             type: 'credentials',
             async authorize(credentials, req) {
-                const res = await fetch("http://localhost:3000/api/login", {
+                const res = await fetch("/api/login", {
                     method: "POST",
                     body: JSON.stringify({
                         "id": credentials.id,

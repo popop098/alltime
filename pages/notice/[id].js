@@ -34,7 +34,7 @@ const View_Notice = ({notice}) => {
 }
 
 View_Notice.getInitialProps = async ({ query:{ id }}) => {
-    const res = await fetch(`http://localhost:3000/api/notice/${id}`);
+    const res = await fetch(`/api/notice/${id}`);
     const {data} = await res.json()
 
     return {notice:data}

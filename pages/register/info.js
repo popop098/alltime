@@ -151,7 +151,7 @@ export default function Home() {
                 {type: "error", render: "비밀번호가 일치하지않습니다.", autoClose: 5000, isLoading: false, transition: Flip}
             )
         }
-        await fetch("http://localhost:3000/api/register", {
+        await fetch("/api/register", {
             method: "POST",
             body: JSON.stringify(
                 {

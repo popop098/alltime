@@ -28,7 +28,7 @@ export default function Login() {
             id,
             pwd,
             redirect: false,
-            callbackUrl:"http://localhost:3000/"
+            callbackUrl:"https://alltime.kr/"
         });
         console.log(response);
         await router.push(response.url)

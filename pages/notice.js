@@ -15,7 +15,7 @@ export default function Notice(){
     const router = useRouter();
     const DeleteNotice = async ({NoticeId}) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/notice/${NoticeId}`, {
+            const res = await fetch(`/api/notice/${NoticeId}`, {
                 method: 'DELETE',
                 headers: {
                     "Accept": "application/json",

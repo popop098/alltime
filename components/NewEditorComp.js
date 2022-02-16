@@ -29,7 +29,7 @@ export default function WriteContentPage(){
     const submitNotice = async () => {
         try {
             const Time = moment().format('YYYY/MMMM/Do/dddd, a h:mm:ss')
-            const res = await fetch(`http://localhost:3000/api/notice`, {
+            const res = await fetch(`/api/notice`, {
                 method: 'POST',
                 headers: {
                     "Accept": "application/json",

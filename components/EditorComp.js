@@ -27,7 +27,7 @@ export default function WriteContentPage({title,description}){
     };
     const updateNotice = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/notice/${router.query.id}`, {
+            const res = await fetch(`/api/notice/${router.query.id}`, {
                 method: 'PUT',
                 headers: {
                     "Accept": "application/json",
