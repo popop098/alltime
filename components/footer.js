@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Image from "next/image";
-import fav from '../public/fav.png'
+//import fav from '../public/fav.png'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faDiscord} from "@fortawesome/free-brands-svg-icons";
 
@@ -54,7 +54,7 @@ export default function Footer() {
               Copyright &copy; 2022 OOO. All Rights Reserved.{" "}
           </div>
           <div>
-              <Image src={fav} width="140px" height="140px"></Image>
+              <Image src="https://opencdn.winsub.kr/img/c9ldMS29uI7SmIcR7JwhJENlE8uLv0.png" width="140px" height="140px"></Image>
           </div>
       </footer>
   );
